@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>快速排序算法</title>
+</head>
+<body>
+
+</body>
+<script>
+/**
+ * 快速排序算法
+ */
+function sort(arr){
+	/**
+	* 排序子集
+		arr:需要排序的数组
+		begin:排序开始位置
+		end:排序最终位置
+	*/
+	function sortSub(arr,begin,end){
+		if(begin >= end){//如果开始位置大于等于最终位置，则排序结束
+			return null;
+		}
+		var centerIndex = partition(arr,begin,end,arr[end]);//根据起始位置和最终位置分割数组，根据数组的最后一个数字分割
+		sortSub(arr,begin,centerIndex-1);//继续排序分割后，左侧的数组
+		sortSub(arr,centerIndex+1,end);//继续排序分割后，右侧的数组
+	}
+	sortSub(arr,0,arr.length-1);//将数组排序，左侧从0，右侧最终位置为长度-1
+}
+
+function partition(arr,begin,end,num){//根据某个数值分割arr数组begin-num范围，将比num小的数字，放在左侧，比num大的数字，放在右侧
+	var left = begin - 1;
+	var right = end;
+	while(true){
+		while(left < right && arr[++left] < num);//左侧一直向右搜索，找到比指定数值大的数字截止
+		while(left < right && arr[--right] > num);//右侧一直向左搜索，找到比指定数值小的数字为止
+		if(left >= right){//如果做左侧已经超过右侧位置，则不需要继续搜索
+			break;
+		}
+		var temp = arr[left];
+		arr[left] = arr[right];
+		arr[right] = temp;//交换左侧较大数值和右侧较小数值
+	}
+	var temp = arr[left];
+	arr[left] = arr[end];
+	arr[end] = temp;//最后把最后一个数值和中间数值进行交换
+	return left;//返回中间数值所在的索引
+}
+
+
+var arr = [];//需要排序的数组
+for(var i=0;i<10;i++){
+	arr.push(Math.round(Math.random()*100));//随机生成数字添加到数组
+}
+console.log(arr);
+sort(arr);
+//console.log(partition(arr,0,arr.length-1,arr[arr.length-1]));
+console.log(arr);
+</script>
+</html>
