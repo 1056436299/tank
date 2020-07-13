@@ -1,5 +1,6 @@
 package tank.frameobject;
 
+import tank.ResourceFile;
 import tank.frame.TankFrame;
 import tank.frameobject.base.TankDir;
 import tank.frameobject.base.FrameObj;
@@ -24,8 +25,8 @@ public class Tank extends FrameObj {
      * 默认坦克移动速度为3
      */
     {
-        this.width = 50;
-        this.height = 50;
+        this.width = ResourceFile.tankD.getWidth();
+        this.height = ResourceFile.tankD.getHeight();
         this.speed = 3;
     }
 
@@ -34,14 +35,17 @@ public class Tank extends FrameObj {
      * @param frame
      */
     public Tank(TankFrame frame){
-        this(200,200,frame);
+        this(frame,200,200);
     }
-    public Tank(Integer x, Integer y, TankFrame frame){
+    /**
+     * 传入x,y位置，并将frame传入
+     * @param frame
+     */
+    public Tank(TankFrame frame,int x , int y){
+        this.frame = frame;
         this.x = x;
         this.y = y;
-        this.frame = frame;
     }
-
     public void setBl(boolean bl) {
         this.bl = bl;
         setDir();
@@ -68,10 +72,21 @@ public class Tank extends FrameObj {
      * @param g 画笔
      */
     public void paint(Graphics g){
-        Color color = g.getColor();
-        g.setColor(Color.blue);
-        g.fillRect(x,y,width,height);
-        g.setColor(color);
+//        Color color = g.getColor();
+//        g.setColor(Color.blue);
+        if(!this.isLive()){
+            frame.removeTank(this);
+            return;
+        }
+        switch (dir){
+            case LEFT:g.drawImage(ResourceFile.tankL,x,y,null);break;
+            case RIGHT:g.drawImage(ResourceFile.tankR,x,y,null);break;
+            case UP:g.drawImage(ResourceFile.tankU,x,y,null);break;
+            case DOWN:g.drawImage(ResourceFile.tankD,x,y,null);break;
+        }
+
+//        g.fillRect(x,y,width,height);
+//        g.setColor(color);
     }
 
     /**
@@ -100,4 +115,5 @@ public class Tank extends FrameObj {
         Bullet bullet = new Bullet(this);
         frame.addBullet(bullet);
     }
+
 }

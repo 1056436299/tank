@@ -1,5 +1,7 @@
 package tank.frameobject;
 
+import tank.ResourceFile;
+import tank.frame.TankFrame;
 import tank.frameobject.base.FrameObj;
 
 import java.awt.*;
@@ -10,24 +12,37 @@ import java.awt.*;
 public class Bullet extends FrameObj {
 
     {
-        this.width = 2;
-        this.height = 2;
+        this.width = ResourceFile.bulletD.getWidth();
+        this.height = ResourceFile.bulletD.getHeight();
         this.speed = 10;
-        isMove = true;
+        this.isMove = true;
     }
     public Bullet(Tank tank) {
         this.frame=tank.getFrame();
-        this.x = tank.getX() + tank.getWidth() / 2;
-        this.y = tank.getY() + tank.getHeight() / 2;
+        this.x = tank.getX() + tank.getWidth() / 2 - getWidth() / 2;
+        this.y = tank.getY() + tank.getHeight() / 2 - this.height / 2;
         this.dir = tank.getDir();
     }
 
     @Override
     public void paint(Graphics g) {
-        Color color = g.getColor();
-        g.setColor(Color.white);
-        g.fillRect(x,y,width,height);
-        g.setColor(color);
+        if(!isLive()){
+            frame.removeBullet(this);
+        }
+        switch (dir){
+            case LEFT:g.drawImage(ResourceFile.bulletL,x,y,null);break;
+            case RIGHT:g.drawImage(ResourceFile.bulletR,x,y,null);break;
+            case UP:g.drawImage(ResourceFile.bulletU,x,y,null);break;
+            case DOWN:g.drawImage(ResourceFile.bulletD,x,y,null);break;
+        }
     }
 
+    public void collideWithTank(Tank tank){
+        Rectangle tankRec = new Rectangle(tank.getX(),tank.getY(),tank.getWidth(),tank.getHeight());
+        Rectangle thisRec = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        if(tankRec.intersects(thisRec)){
+            tank.die();
+            this.die();
+        }
+    }
 }

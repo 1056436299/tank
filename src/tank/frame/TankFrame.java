@@ -32,22 +32,28 @@ public class TankFrame extends DoubleBufferingFrame {
      * 坦克所发射的子弹
      */
     private List<Bullet> bulletList = new ArrayList<Bullet>();
-
-    public List<Bullet> getBulletList() {
-        return bulletList;
-    }
-    public void addBullet(Bullet bullet){
-        bulletList.add(bullet);
-    }
-
     /**
      * 用于存储所有的物体
      */
-    List<FrameObj> objectList = new ArrayList<>();
+    List<Tank> tankList = new ArrayList<>();
     {
         //将主战坦克添加到物体列表
-        objectList.add(maintank);
+//        tankList.add(maintank);
     }
+
+    public void addBullet(Bullet bullet){
+        bulletList.add(bullet);
+    }
+    public void addTank(Tank tank){
+        tankList.add(tank);
+    }
+    public void removeBullet(Bullet bullet){
+        bulletList.remove(bullet);
+    }
+    public void removeTank(Tank tank){
+        tankList.remove(tank);
+    }
+
     public TankFrame(){
         this.setSize(GAME_WIDTH,GAME_HEIGHT);
         this.setResizable(false);
@@ -65,15 +71,27 @@ public class TankFrame extends DoubleBufferingFrame {
 
     @Override
     public void paint(Graphics g) {
-        for(FrameObj obj : objectList){
-            obj.move();
-            obj.paint(g);
+        maintank.move();
+        maintank.paint(g);
+        for(int i = 0 ; i < tankList.size() ; i++){
+            tankList.get(i).move();
+            tankList.get(i).paint(g);
         }
         for(int i = 0 ; i < bulletList.size() ; i++){
             bulletList.get(i).move();
             bulletList.get(i).paint(g);
         }
+        for(Tank tank : tankList){
+            for(Bullet bullet : bulletList){
+                bullet.collideWithTank(tank);
+            }
+        }
         removeOut();
+        Color color = g.getColor();
+        g.setColor(Color.white);
+        g.drawString("坦克数量："+tankList.size(),50,60);
+        g.drawString("子弹数量："+bulletList.size(),50,80);
+        g.setColor(color);
     }
 
     /**

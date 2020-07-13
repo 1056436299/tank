@@ -9,6 +9,10 @@ import java.awt.*;
  */
 public abstract class FrameObj {
     /**
+     * 当前是否生存
+     */
+    protected boolean live = true;
+    /**
      * 当前
      */
     protected TankFrame frame;
@@ -93,5 +97,11 @@ public abstract class FrameObj {
                     break;
             }
         }
+    }
+    public void die(){
+        this.live = false;
+    }
+    public boolean isLive(){
+        return live;
     }
 }
