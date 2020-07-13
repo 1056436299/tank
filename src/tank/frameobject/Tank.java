@@ -14,10 +14,10 @@ public class Tank extends FrameObj {
     /**
      * 正在移动的四个方向
      */
-    private boolean bl = false;
-    private boolean bu = false;
-    private boolean br = false;
-    private boolean bd = false;
+    protected boolean bl = false;
+    protected boolean bu = false;
+    protected boolean br = false;
+    protected boolean bd = false;
 
 
 
@@ -105,7 +105,7 @@ public class Tank extends FrameObj {
     /**
      * 设置当前面朝的方向
      */
-    private void setDir(){
+    protected void setDir(){
         if(bl) dir = TankDir.LEFT;
         if(br) dir = TankDir.RIGHT;
         if(bu) dir = TankDir.UP;
@@ -116,4 +116,9 @@ public class Tank extends FrameObj {
         frame.addBullet(bullet);
     }
 
+    @Override
+    public void die() {
+        super.die();
+        frame.addBoom(new Boom(this));
+    }
 }

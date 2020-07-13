@@ -2,6 +2,7 @@ package tank;
 
 
 import tank.frame.TankFrame;
+import tank.frameobject.AITank;
 import tank.frameobject.Tank;
 
 /**
@@ -13,7 +14,7 @@ public class TankMain {
 //        for(tankFrame)
 //        tankFrame.addtank
         for(int i = 0 ; i < 5 ; i++){
-            tankFrame.addTank(new Tank(tankFrame,100*(i+1),100));
+            tankFrame.addTank(new AITank(tankFrame,100*(i+1),100));
         }
         while(true){
             Thread.sleep(30);

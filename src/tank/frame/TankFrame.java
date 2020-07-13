@@ -1,6 +1,7 @@
 package tank.frame;
 
 import tank.frame.base.DoubleBufferingFrame;
+import tank.frameobject.Boom;
 import tank.frameobject.Bullet;
 import tank.frameobject.Tank;
 import tank.frameobject.base.FrameObj;
@@ -24,6 +25,13 @@ public class TankFrame extends DoubleBufferingFrame {
      * 游戏宽度
      */
     private final Integer GAME_HEIGHT = 600;
+    private List<Boom> booms = new ArrayList<>();
+    public void addBoom(Boom boom){
+        booms.add(boom);
+    }
+    public void removeBoom(Boom boom){
+        booms.remove(boom);
+    }
     /**
      * 主战坦克
      */
@@ -38,7 +46,7 @@ public class TankFrame extends DoubleBufferingFrame {
     List<Tank> tankList = new ArrayList<>();
     {
         //将主战坦克添加到物体列表
-//        tankList.add(maintank);
+        tankList.add(maintank);
     }
 
     public void addBullet(Bullet bullet){
@@ -71,8 +79,8 @@ public class TankFrame extends DoubleBufferingFrame {
 
     @Override
     public void paint(Graphics g) {
-        maintank.move();
-        maintank.paint(g);
+//        maintank.move();
+//        maintank.paint(g);
         for(int i = 0 ; i < tankList.size() ; i++){
             tankList.get(i).move();
             tankList.get(i).paint(g);
@@ -85,6 +93,9 @@ public class TankFrame extends DoubleBufferingFrame {
             for(Bullet bullet : bulletList){
                 bullet.collideWithTank(tank);
             }
+        }
+        for(int i = 0 ; i < booms.size() ; i++){
+            booms.get(i).paint(g);
         }
         removeOut();
         Color color = g.getColor();

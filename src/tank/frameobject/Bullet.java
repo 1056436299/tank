@@ -1,7 +1,6 @@
 package tank.frameobject;
 
 import tank.ResourceFile;
-import tank.frame.TankFrame;
 import tank.frameobject.base.FrameObj;
 
 import java.awt.*;
@@ -10,6 +9,7 @@ import java.awt.*;
  * 炮弹
  */
 public class Bullet extends FrameObj {
+    private Tank reftank;
 
     {
         this.width = ResourceFile.bulletD.getWidth();
@@ -18,6 +18,7 @@ public class Bullet extends FrameObj {
         this.isMove = true;
     }
     public Bullet(Tank tank) {
+        this.reftank = tank;
         this.frame=tank.getFrame();
         this.x = tank.getX() + tank.getWidth() / 2 - getWidth() / 2;
         this.y = tank.getY() + tank.getHeight() / 2 - this.height / 2;
@@ -38,9 +39,9 @@ public class Bullet extends FrameObj {
     }
 
     public void collideWithTank(Tank tank){
-        Rectangle tankRec = new Rectangle(tank.getX(),tank.getY(),tank.getWidth(),tank.getHeight());
-        Rectangle thisRec = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
-        if(tankRec.intersects(thisRec)){
+//        Rectangle tankRec = new Rectangle(tank.getX(),tank.getY(),tank.getWidth(),tank.getHeight());
+//        Rectangle thisRec = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        if(this.reftank != tank && this.getRec().intersects(tank.getRec())){
             tank.die();
             this.die();
         }

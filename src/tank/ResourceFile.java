@@ -5,6 +5,17 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ResourceFile {
+    public static BufferedImage[] boomImages = new BufferedImage[16];
+    static{
+        try{
+            for(int i = 0 ;i < 16 ; i++){
+                boomImages[i] = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/e"+(i+1)+".gif"));
+            }
+        }
+        catch (Exception e){
+
+        }
+    }
     public static BufferedImage tankU;
     public static BufferedImage tankD;
     public static BufferedImage tankL;

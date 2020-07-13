@@ -7,28 +7,11 @@ import java.awt.*;
 /**
  * 所有的物体继承自该类
  */
-public abstract class FrameObj {
-    /**
-     * 当前是否生存
-     */
-    protected boolean live = true;
-    /**
-     * 当前
-     */
-    protected TankFrame frame;
+public abstract class FrameObj extends BaseFrameObj {
     /**
      *  当前面对的方向
      */
     protected TankDir dir = TankDir.UP;
-
-    /**
-     * 当前所在的位置，x轴
-     */
-    protected int x = 0;
-    /**
-     * 当前所在的位置，y轴
-     */
-
     /**
      * 物体的宽度
      */
@@ -41,7 +24,7 @@ public abstract class FrameObj {
      * 是否在移动
      */
     protected boolean isMove = false;
-    protected int y = 0;
+
     protected int speed = 0;
 
     public int getWidth() {
@@ -55,27 +38,29 @@ public abstract class FrameObj {
     public TankDir getDir() {
         return dir;
     }
+    private volatile Rectangle rec;
+    private Object recLock = new Object();
+    public Rectangle getRec(){
+        if(rec == null){
+            synchronized (recLock){
+                if(rec == null){
+                    rec = new Rectangle(this.x,this.y,this.width,this.height);
+                }
+            }
+        }
+        else{
+            synchronized (recLock) {
+                rec.x = this.getX();
+                rec.y = this.getY();
+            }
+        }
+        return rec;
+    }
 
     public void setDir(TankDir dir) {
         this.dir = dir;
     }
 
-    public TankFrame getFrame() {
-        return frame;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    /**
-     * 将当前物体画出来
-     */
-    public abstract void paint(Graphics g);
 
     /**
      * 物体的移动方法
@@ -98,10 +83,5 @@ public abstract class FrameObj {
             }
         }
     }
-    public void die(){
-        this.live = false;
-    }
-    public boolean isLive(){
-        return live;
-    }
+
 }
