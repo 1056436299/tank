@@ -1,10 +1,9 @@
 package tank.frame;
 
 import tank.frame.base.DoubleBufferingFrame;
-import tank.frameobject.Boom;
+import tank.frameobject.Explode;
 import tank.frameobject.Bullet;
 import tank.frameobject.Tank;
-import tank.frameobject.base.FrameObj;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -20,17 +19,17 @@ public class TankFrame extends DoubleBufferingFrame {
     /**
      * 游戏高度
      */
-    private final Integer GAME_WIDTH = 800;
+    private final Integer GAME_WIDTH = 1024;
     /**
      * 游戏宽度
      */
-    private final Integer GAME_HEIGHT = 600;
-    private List<Boom> booms = new ArrayList<>();
-    public void addBoom(Boom boom){
-        booms.add(boom);
+    private final Integer GAME_HEIGHT = 768;
+    private List<Explode> explodes = new ArrayList<>();
+    public void addBoom(Explode explode){
+        explodes.add(explode);
     }
-    public void removeBoom(Boom boom){
-        booms.remove(boom);
+    public void removeBoom(Explode explode){
+        explodes.remove(explode);
     }
     /**
      * 主战坦克
@@ -79,23 +78,36 @@ public class TankFrame extends DoubleBufferingFrame {
 
     @Override
     public void paint(Graphics g) {
+//        //如果要将主战坦克，放在所有坦克之外，则主战坦克需要进行移动及渲染
 //        maintank.move();
 //        maintank.paint(g);
+        /**
+         * 所有坦克移动
+         */
         for(int i = 0 ; i < tankList.size() ; i++){
             tankList.get(i).move();
             tankList.get(i).paint(g);
         }
+        /**
+         * 所有子弹移动
+         */
         for(int i = 0 ; i < bulletList.size() ; i++){
             bulletList.get(i).move();
             bulletList.get(i).paint(g);
         }
+        /**
+         * 坦克和子弹碰撞检测
+         */
         for(Tank tank : tankList){
             for(Bullet bullet : bulletList){
                 bullet.collideWithTank(tank);
             }
         }
-        for(int i = 0 ; i < booms.size() ; i++){
-            booms.get(i).paint(g);
+        /**
+         * 渲染所有爆炸效果
+         */
+        for(int i = 0; i < explodes.size() ; i++){
+            explodes.get(i).paint(g);
         }
         removeOut();
         Color color = g.getColor();
@@ -116,6 +128,10 @@ public class TankFrame extends DoubleBufferingFrame {
             }
         }
     }
+
+    /**
+     * 键盘事件
+     */
     class KeyListener extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {

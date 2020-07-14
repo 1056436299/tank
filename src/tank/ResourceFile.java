@@ -1,5 +1,7 @@
 package tank;
 
+import tank.util.ImageUtil;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -24,9 +26,9 @@ public class ResourceFile {
     static{
         try {
             tankU = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
-            tankD = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/tankD.gif"));
-            tankL = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
-            tankR = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/tankR.gif"));
+            tankD = ImageUtil.rotateImage(tankU,180);
+            tankL = ImageUtil.rotateImage(tankU,-90);
+            tankR = ImageUtil.rotateImage(tankU,90);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,10 +41,10 @@ public class ResourceFile {
     public static BufferedImage bulletR;
     static{
         try {
-            bulletL = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/bulletL.gif"));
-            bulletD = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
             bulletU = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
-            bulletR = ImageIO.read(ResourceFile.class.getClassLoader().getResourceAsStream("images/bulletR.gif"));
+            bulletD = ImageUtil.rotateImage(bulletU,180);
+            bulletL = ImageUtil.rotateImage(bulletU,-90);
+            bulletR = ImageUtil.rotateImage(bulletU,90);
         } catch (IOException e) {
             e.printStackTrace();
         }

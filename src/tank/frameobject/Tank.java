@@ -119,6 +119,6 @@ public class Tank extends FrameObj {
     @Override
     public void die() {
         super.die();
-        frame.addBoom(new Boom(this));
+        frame.addBoom(new Explode(this));
     }
 }

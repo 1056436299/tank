@@ -4,6 +4,9 @@ import tank.frame.TankFrame;
 
 import java.util.Random;
 
+/**
+ * 电脑自动移动的坦克
+ */
 public class AITank extends Tank {
     {
         this.isMove = true;
@@ -11,6 +14,9 @@ public class AITank extends Tank {
 
     Random random = new Random();
 
+    /**
+     * 清除当前的移动按钮
+     */
     private void noDir() {
         bd = false;
         br = false;
@@ -21,6 +27,9 @@ public class AITank extends Tank {
     @Override
     public void move() {
         int rand = random.nextInt(100);
+        /**
+         * 如果越界，则向反方向移动
+         */
         if (this.x < 0) {
             br = true;
         }
@@ -33,6 +42,9 @@ public class AITank extends Tank {
         if (this.y > frame.getHeight() - this.height) {
             bu = true;
         }
+        /**
+         * 模拟随机按下上下左右方向
+         */
         if (rand == 99) {
             file();
         }
@@ -52,7 +64,7 @@ public class AITank extends Tank {
             noDir();
             bl = true;
         }
-        setDir();
+        setDir();//转向
         super.move();
     }
 
