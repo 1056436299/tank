@@ -27,21 +27,7 @@ public class AITank extends Tank {
     @Override
     public void move() {
         int rand = random.nextInt(100);
-        /**
-         * 如果越界，则向反方向移动
-         */
-        if (this.x < 0) {
-            br = true;
-        }
-        if (this.x > frame.getWidth() - this.width) {
-            bl = true;
-        }
-        if (this.y < 0) {
-            bd = true;
-        }
-        if (this.y > frame.getHeight() - this.height) {
-            bu = true;
-        }
+
         /**
          * 模拟随机按下上下左右方向
          */
@@ -63,6 +49,25 @@ public class AITank extends Tank {
         if (rand == 95) {
             noDir();
             bl = true;
+        }
+        /**
+         * 如果越界，则向反方向移动
+         */
+        if (this.x < 0) {
+            noDir();
+            br = true;
+        }
+        if (this.x > frame.getWidth() - this.width) {
+            noDir();
+            bl = true;
+        }
+        if (this.y < 0) {
+            noDir();
+            bd = true;
+        }
+        if (this.y > frame.getHeight() - this.height) {
+            noDir();
+            bu = true;
         }
         setDir();//转向
         super.move();
