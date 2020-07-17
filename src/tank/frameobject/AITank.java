@@ -1,5 +1,6 @@
 package tank.frameobject;
 
+import tank.bulletStrategy.OneBullet;
 import tank.frame.TankFrame;
 
 import java.util.Random;
@@ -32,7 +33,7 @@ public class AITank extends Tank {
          * 模拟随机按下上下左右方向
          */
         if (rand == 99) {
-            file();
+            fire(OneBullet.getins());
         }
         if (rand == 98) {
             noDir();
@@ -50,25 +51,7 @@ public class AITank extends Tank {
             noDir();
             bl = true;
         }
-        /**
-         * 如果越界，则向反方向移动
-         */
-        if (this.x < 0) {
-            noDir();
-            br = true;
-        }
-        if (this.x > frame.getWidth() - this.width) {
-            noDir();
-            bl = true;
-        }
-        if (this.y < 0) {
-            noDir();
-            bd = true;
-        }
-        if (this.y > frame.getHeight() - this.height) {
-            noDir();
-            bu = true;
-        }
+
         setDir();//转向
         super.move();
     }

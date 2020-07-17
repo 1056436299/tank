@@ -2,6 +2,7 @@ package tank.frameobject;
 
 import tank.ResourceFile;
 import tank.frameobject.base.FrameObj;
+import tank.frameobject.base.TankDir;
 
 import java.awt.*;
 
@@ -24,7 +25,17 @@ public class Bullet extends FrameObj {
         this.y = tank.getY() + tank.getHeight() / 2 - this.height / 2;
         this.dir = tank.getDir();
     }
+    public Bullet(Tank tank,TankDir dir) {
+        this.reftank = tank;
+        this.frame=tank.getFrame();
+        this.x = tank.getX() + tank.getWidth() / 2 - getWidth() / 2;
+        this.y = tank.getY() + tank.getHeight() / 2 - this.height / 2;
+        this.dir = dir;
+    }
 
+    public void setDir(TankDir dir){
+        this.dir = dir;
+    }
     @Override
     public void paint(Graphics g) {
         if(!isLive()){

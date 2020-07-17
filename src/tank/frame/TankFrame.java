@@ -1,5 +1,7 @@
 package tank.frame;
 
+import tank.bulletStrategy.FourBullet;
+import tank.bulletStrategy.OneBullet;
 import tank.frame.base.DoubleBufferingFrame;
 import tank.frameobject.Explode;
 import tank.frameobject.Bullet;
@@ -49,7 +51,10 @@ public class TankFrame extends DoubleBufferingFrame {
     }
 
     public void addBullet(Bullet bullet){
-        bulletList.add(bullet);
+        this.bulletList.add(bullet);
+    }
+    public void addBullets(List<Bullet> bulletList){
+        this.bulletList.addAll(bulletList);
     }
     public void addTank(Tank tank){
         tankList.add(tank);
@@ -64,7 +69,7 @@ public class TankFrame extends DoubleBufferingFrame {
     public TankFrame(){
         this.setSize(GAME_WIDTH,GAME_HEIGHT);
         this.setResizable(false);
-        this.setTitle("world of tank");
+        this.setTitle("my tank");
         this.setVisible(true);
         this.addKeyListener(new KeyListener());
         this.addWindowListener(new WindowAdapter() {
@@ -149,7 +154,8 @@ public class TankFrame extends DoubleBufferingFrame {
                 case KeyEvent.VK_RIGHT:maintank.setBr(false);break;
                 case KeyEvent.VK_UP:maintank.setBu(false);break;
                 case KeyEvent.VK_DOWN:maintank.setBd(false);break;
-                case KeyEvent.VK_CONTROL:maintank.file();break;//ctrl发射子弹
+                case KeyEvent.VK_CONTROL :maintank.fire(OneBullet.getins());break;
+                case KeyEvent.VK_Z:maintank.fire(FourBullet.getins());break;//ctrl发射子弹
             }
         }
     }

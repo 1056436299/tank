@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ResourceFile {
+    private ResourceFile(){}
     public static BufferedImage[] boomImages = new BufferedImage[16];
     static{
         try{

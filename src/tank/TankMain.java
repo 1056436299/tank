@@ -13,7 +13,7 @@ public class TankMain {
         TankFrame tankFrame = new TankFrame();
 //        for(tankFrame)
 //        tankFrame.addtank
-        for(int i = 0 ; i < 5 ; i++){
+        for(int i = 0 ; i < Integer.parseInt(Prop.get("enemyNum").toString()); i++){
             tankFrame.addTank(new AITank(tankFrame,100*(i+1),100));
         }
         while(true){

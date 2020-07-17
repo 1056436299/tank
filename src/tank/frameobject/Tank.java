@@ -1,11 +1,13 @@
 package tank.frameobject;
 
 import tank.ResourceFile;
+import tank.bulletStrategy.FireStrategy;
 import tank.frame.TankFrame;
 import tank.frameobject.base.TankDir;
 import tank.frameobject.base.FrameObj;
 
 import java.awt.*;
+import java.util.List;
 
 /**
  * 坦克
@@ -100,7 +102,21 @@ public class Tank extends FrameObj {
             isMove=false;
         }
         super.move();
-
+        /**
+         * 如果越界，则位置为边界值
+         */
+        if (this.x < 0) {
+            x = 0;
+        }
+        if (this.x > frame.getWidth() - this.width) {
+            x = frame.getWidth() - this.width;
+        }
+        if (this.y < 0) {
+            y = 0;
+        }
+        if (this.y > frame.getHeight() - this.height) {
+            y = frame.getHeight() - this.height;
+        }
     }
     /**
      * 设置当前面朝的方向
@@ -111,9 +127,12 @@ public class Tank extends FrameObj {
         if(bu) dir = TankDir.UP;
         if(bd) dir = TankDir.DOWN;
     }
-    public void file(){
-        Bullet bullet = new Bullet(this);
-        frame.addBullet(bullet);
+    /**
+     * 开炮
+     */
+    public void fire(FireStrategy bulletStrategy){
+        List<Bullet> list = bulletStrategy.bulletFire(this);
+        frame.addBullets(list);
     }
 
     @Override

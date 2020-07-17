@@ -38,8 +38,15 @@ public abstract class FrameObj extends BaseFrameObj {
     public TankDir getDir() {
         return dir;
     }
+
     private volatile Rectangle rec;
+
     private Object recLock = new Object();
+
+    /**
+     * 获取矩形碰撞检测工具
+     * @return
+     */
     public Rectangle getRec(){
         if(rec == null){
             synchronized (recLock){
